@@ -1,5 +1,5 @@
 vim.pack.add({
-  { src = "https://github.com/rose-pine/neovim", name = "rose-pine" },
+  { src = "https://github.com/AlexvZyl/nordic.nvim" },
 })
 vim.o.background = "dark"
-vim.cmd([[colorscheme rose-pine]])
+require("nordic").load()
