@@ -17,7 +17,7 @@
       "src": "https://github.com/tadmccorkle/markdown.nvim"
     },
     "mini.nvim": {
-      "rev": "dc8a9918c3b1bc18a5fcd04d39b6d658074c0886",
+      "rev": "fc5c7167adc51d5f39219e86739d5c193b777f44",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nordic.nvim": {
@@ -25,7 +25,7 @@
       "src": "https://github.com/AlexvZyl/nordic.nvim"
     },
     "nvim-lspconfig": {
-      "rev": "dd1c9b802c943278179a5d819369cda085b79d45",
+      "rev": "d5b6e3db4c17b0146f63a2fc47e2027a754b2cb1",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
@@ -41,7 +41,7 @@
       "src": "https://github.com/rose-pine/neovim"
     },
     "todotxt.nvim": {
-      "rev": "bfa83b7d99070a76b70a214d2eb9ed9176ab552e",
+      "rev": "4e2dec4e6a99bc31f8b2b4e6259efbb7f0fb57b8",
       "src": "https://github.com/phrmendes/todotxt.nvim"
     }
   }
