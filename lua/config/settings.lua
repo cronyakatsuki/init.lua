@@ -46,7 +46,7 @@ vim.opt.pumblend = 10
 vim.opt.completeopt = "menuone,noinsert,noselect"
 
 -- enable signcolumn
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = "yes:2"
 
 -- enable rounded borders
 vim.opt.winborder = "rounded"

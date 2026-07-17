@@ -1,5 +1,6 @@
 vim.pack.add({
-  { src = "https://github.com/folke/lazydev.nvim" }
+  { src = "https://github.com/neovim/nvim-lspconfig" },
+  { src = "https://github.com/folke/lazydev.nvim" },
 })
 
 -- Enable some settings globally
@@ -35,5 +36,3 @@ vim.lsp.enable({
   "qmlls",
 })
 
--- diagnostic settings
-vim.diagnostic.config({ virtual_text = true })
