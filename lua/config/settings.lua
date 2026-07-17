@@ -38,14 +38,9 @@ vim.opt.inccommand = "split"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
--- commandline settings
-vim.opt.cmdheight = 1
-vim.opt.showmode = false
-
 -- popup settings
 vim.opt.pumheight = 10
 vim.opt.pumblend = 10
-vim.opt.winblend = 0
 
 -- better completion options
 vim.opt.completeopt = "menuone,noinsert,noselect"
@@ -57,12 +52,10 @@ vim.opt.signcolumn = "yes"
 vim.opt.winborder = "rounded"
 
 -- better file handling
-vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.swapfile = false
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.expand("~/.local/state/nvim/undo")
-vim.opt.autowrite = false
 
 -- durations for completion and other stuff
 vim.opt.updatetime = 300
