@@ -31,9 +31,6 @@ miniclue.setup({
     -- `z` key
     { mode = 'n', keys = 'z' },
     { mode = 'x', keys = 'z' },
-
-    -- add in support for built in completion
-    { mode = 'i', keys = '<C-x>' },
   },
 
   clues = {

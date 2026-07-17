@@ -20,8 +20,6 @@ vim.opt.laststatus = 3
 
 -- setup tabs and indenting
 vim.opt.expandtab = true
-vim.opt.smartindent = false
-vim.opt.autoindent = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
@@ -64,7 +62,6 @@ vim.opt.writebackup = false
 vim.opt.swapfile = false
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.expand("~/.local/state/nvim/undo")
-vim.opt.autoread = true
 vim.opt.autowrite = false
 
 -- durations for completion and other stuff
@@ -73,16 +70,10 @@ vim.opt.timeoutlen = 500
 vim.opt.ttimeoutlen = 0
 
 -- change some behaviour settings
-vim.opt.hidden = true
-vim.opt.errorbells = false
-vim.opt.backspace = "indent,eol,start"
 vim.opt.iskeyword:append("-") -- treat dash as part of the word
 vim.opt.path:append("**")     -- include subdirectories in search
-vim.opt.modifiable = true
-vim.opt.encoding = "UTF8"
 
 -- better completion settings for the commandline
-vim.opt.wildmenu = true
 vim.opt.wildmode = "longest:full,full"
 vim.opt.wildignore:append({ "*.o", "*.obj", "*.pyc", "*.class", "*.jar" })
 
@@ -90,15 +81,11 @@ vim.opt.wildignore:append({ "*.o", "*.obj", "*.pyc", "*.class", "*.jar" })
 local builtin_plugs = {
   "gzip",
   "matchit",
-  "matchparen",
   "netrwPlugin",
   "tarPlugin",
-  "tohtml",
   "tutor",
   "zipPlugin",
   "2html_plugin",
-  "getscript",
-  "getscriptPlugin",
 }
 
 for i = 1, #builtin_plugs do

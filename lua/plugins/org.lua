@@ -109,7 +109,7 @@ require("orgmode").setup({
     s = {
       description = "Someday/Maybe",
       template = "* SOMEDAY %?\n  :PROPERTIES:\n  :CREATED: %U\n  :END:",
-      target = "~/orgfiles/someday.org",
+      target = ORG_DIR .. "/someday.org",
     },
   },
 
