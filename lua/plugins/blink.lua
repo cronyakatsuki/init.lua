@@ -17,11 +17,6 @@ ls.setup({})
 -- Load friendly-snippets (provides snippets for all major languages)
 require("luasnip.loaders.from_vscode").lazy_load()
 
--- copilot.lua — manages the Copilot LSP connection (suggestion/panel disabled, blink.cmp handles UI)
-require("copilot").setup({
-  suggestion = { enabled = false },
-  panel = { enabled = false },
-})
 
 -- Build the Rust fuzzy matcher (only needed on first install/update)
 local cmp = require("blink.cmp")
@@ -43,7 +38,7 @@ cmp.setup({
 
   -- Completion sources
   sources = {
-    default = { "lsp", "path", "snippets", "buffer", "copilot" },
+    default = { "lsp", "path", "snippets", "buffer" },
     providers = {
       copilot = {
         name = "copilot",
