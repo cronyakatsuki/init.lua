@@ -7,7 +7,7 @@ vim.pack.add({
   { src = "https://github.com/rafamadriz/friendly-snippets" },
   { src = "https://github.com/zbirenbaum/copilot.lua" },
   { src = "https://github.com/fang2hou/blink-copilot" },
-  { src = "https://github.com/saghen/blink.cmp", branch = "v1" },
+  { src = "https://github.com/saghen/blink.cmp" },
 })
 
 -- Minimal LuaSnip setup (no jump mappings — blink.cmp handles those via snippet_forward/backward)
@@ -18,7 +18,9 @@ ls.setup({})
 require("luasnip.loaders.from_vscode").lazy_load()
 
 
--- Build the Rust fuzzy matcher (only needed on first install/update)
+-- Build/download the Rust fuzzy matcher (only needed on first install/update)
+-- Uses build() since there are no tagged v2 releases yet for download().
+-- When v2 gets its first release, switch to cmp.download():pwait().
 local cmp = require("blink.cmp")
 cmp.build():pwait()
 
