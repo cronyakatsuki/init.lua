@@ -20,6 +20,19 @@ vim.lsp.config("*", {
 -- fix annoying lua lsp errors
 require("lazydev").setup()
 
+-- Load per-server settings from lsp/*.lua
+-- Maps: module name (filename) -> LSP server name
+local server_configs = {
+  go = "gopls",   -- lsp/go.lua  -> gopls settings
+  nixd = "nixd",
+}
+for mod, server in pairs(server_configs) do
+  local ok, settings = pcall(require, "lsp." .. mod)
+  if ok and settings then
+    vim.lsp.config(server, settings)
+  end
+end
+
 -- enable specific language servers
 vim.lsp.enable({
   "nixd",
