@@ -54,4 +54,6 @@ wk.add({
   { "<leader>ol", group = "Links" },
   { "<leader>oa", group = "Agenda" },
   { "<leader>nd", group = "Roam Dailies" },
+  { "<leader>u",  group = "Undo tree" },
+  { "<leader>z",  group = "Zoxide" },
 })

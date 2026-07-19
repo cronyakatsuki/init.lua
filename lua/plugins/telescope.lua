@@ -6,6 +6,9 @@ vim.pack.add({
   { src = "https://github.com/nvim-lua/plenary.nvim" },
   { src = "https://github.com/nvim-telescope/telescope.nvim" },
   { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim" },
+  { src = "https://github.com/nvim-orgmode/telescope-orgmode.nvim" },
+  { src = "https://github.com/debugloop/telescope-undo.nvim" },
+  { src = "https://github.com/jvgrootveld/telescope-zoxide" },
 })
 
 -- Build the fzf-native C extension after install/update
@@ -60,10 +63,31 @@ telescope.setup({
       override_file_sorter = true,      -- use fzf for file sorting
       case_mode = "smart_case",         -- smart / ignore / respect
     },
+    undo = {
+      -- telescope-undo default options are fine
+    },
+    zoxide = {
+      prompt_title = "[ Zoxide ]",
+      mappings = {
+        default = {
+          after_action = function(selection)
+            print("cd to " .. selection.path)
+          end,
+        },
+        ["<C-s>"] = {
+          action = function(selection)
+            vim.cmd.edit(selection.path)
+          end,
+        },
+      },
+    },
   },
 })
 
+-- Load telescope extensions
 telescope.load_extension("fzf")
+telescope.load_extension("undo")
+telescope.load_extension("zoxide")
 
 -- ── File / text pickers ──────────────────────────────────────────
 vim.keymap.set("n", "<Leader>ff", builtin.find_files,  { desc = "Find files" })
@@ -146,3 +170,25 @@ vim.keymap.set("n", "<Leader>fc", function()
     end,
   }):find()
 end, { desc = "Search visited files with tag 'core'" })
+
+-- ── Orgmode telescope pickers ───────────────────────────────────
+require("telescope-orgmode").setup({
+  adapter = "telescope",
+  -- Show headlines from all agenda files
+  show_location = true,
+  show_tags = true,
+  show_todo_state = true,
+  show_priority = true,
+})
+
+local tom = require("telescope-orgmode")
+vim.keymap.set("n", "<leader>oH", tom.search_headings, { desc = "Org search headlines" })
+vim.keymap.set("n", "<leader>oT", tom.search_tags,     { desc = "Org search tags" })
+vim.keymap.set("n", "<leader>oR", tom.refile_heading,  { desc = "Org refile heading" })
+vim.keymap.set("n", "<leader>oL", tom.insert_link,     { desc = "Org insert link" })
+
+-- ── Undo tree ───────────────────────────────────────────────────
+vim.keymap.set("n", "<leader>u",  "<cmd>Telescope undo<CR>",  { desc = "Undo tree" })
+
+-- ── Zoxide directory picker ─────────────────────────────────────
+vim.keymap.set("n", "<leader>z",  "<cmd>Telescope zoxide list<CR>", { desc = "Zoxide directories" })

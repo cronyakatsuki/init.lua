@@ -24,6 +24,9 @@ require("mini.indentscope").setup()
 -- nice simple notifications inside neovim
 require("mini.notify").setup()
 
+-- commenting (integrates with nvim-ts-context-commentstring automatically)
+require("mini.comment").setup()
+
 require("plugins.mini.files")
 require("plugins.mini.highlight")
 require("plugins.mini.pick")

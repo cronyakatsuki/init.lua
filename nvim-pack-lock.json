@@ -80,6 +80,22 @@
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
+    "nvim-treesitter-context": {
+      "rev": "b311b30818951d01f7b4bf650521b868b3fece16",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
+    },
+    "nvim-treesitter-textobjects": {
+      "rev": "851e865342e5a4cb1ae23d31caf6e991e1c99f1e",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+    },
+    "nvim-ts-autotag": {
+      "rev": "88c1453db4ba7dd24131086fe51fdf74e587d275",
+      "src": "https://github.com/windwp/nvim-ts-autotag"
+    },
+    "nvim-ts-context-commentstring": {
+      "rev": "6141a40173c6efa98242dc951ed4b6f892c97027",
+      "src": "https://github.com/JoosepAlviste/nvim-ts-context-commentstring"
+    },
     "org-roam.nvim": {
       "rev": "34d1d113cd139ea903125305310be3d7c1067484",
       "src": "https://github.com/chipsenkbeil/org-roam.nvim",
@@ -94,6 +110,10 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "rainbow-delimiters.nvim": {
+      "rev": "a798325b7f36acc62741d1029930a7b96d4dd4bf",
+      "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
+    },
     "render-markdown.nvim": {
       "rev": "f422cb5c6855f150e2ddcfaf44e7157b98b34f6a",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
@@ -101,6 +121,18 @@
     "telescope-fzf-native.nvim": {
       "rev": "b25b749b9db64d375d782094e2b9dce53ad53a40",
       "src": "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
+    },
+    "telescope-orgmode.nvim": {
+      "rev": "214fe56e105bb3d0638f33320ed959911a1bfcb1",
+      "src": "https://github.com/nvim-orgmode/telescope-orgmode.nvim"
+    },
+    "telescope-undo.nvim": {
+      "rev": "928d0c2dc9606e01e2cc547196f48d2eaecf58e5",
+      "src": "https://github.com/debugloop/telescope-undo.nvim"
+    },
+    "telescope-zoxide": {
+      "rev": "54bfe630bad08dc9891ec78c7cf8db38dd725c97",
+      "src": "https://github.com/jvgrootveld/telescope-zoxide"
     },
     "telescope.nvim": {
       "rev": "427b576c16792edad01a92b89721d923c19ad60f",
