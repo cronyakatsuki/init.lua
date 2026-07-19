@@ -17,9 +17,7 @@ map_vis('vv', 'add_label()', 'Add label')
 map_vis('vV', 'remove_label()', 'Remove label')
 map_vis('vc', 'add_label("core")', 'Add to core')
 map_vis('vC', 'remove_label("core")', 'Remove from core')
-vim.keymap.set("n", "<Leader>fv", ":Pick visit_paths<CR>", { desc = "Search visited files" })
-vim.keymap.set("n", "<Leader>fc", ":Pick visit_paths filter='core'<CR>",
-  { desc = "Search visited files with tag 'core'" })
+-- fv/fc moved to telescope.lua (telescope-based MiniVisits pickers)
 
 -- simple startup startup screen
 local starter = require('mini.starter')
