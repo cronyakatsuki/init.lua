@@ -63,7 +63,7 @@ vim.opt.timeoutlen = 500
 vim.opt.ttimeoutlen = 0
 
 -- change some behaviour settings
-vim.opt.iskeyword:append("-") -- treat dash as part of the word
+-- moved per-filetype: iskeyword:append("-") only for css/scss
 vim.opt.path:append("**")     -- include subdirectories in search
 
 -- better completion settings for the commandline

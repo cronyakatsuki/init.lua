@@ -31,6 +31,15 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
+-- treat dash as part of the word in CSS/SCSS (e.g. background-color is one word)
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup,
+  pattern = { "css", "scss" },
+  callback = function()
+    vim.opt_local.iskeyword:append("-")
+  end,
+})
+
 -- disable autocommenting lines
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
