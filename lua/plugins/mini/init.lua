@@ -27,5 +27,5 @@ require("mini.notify").setup()
 require("plugins.mini.files")
 require("plugins.mini.highlight")
 require("plugins.mini.pick")
-require("plugins.mini.clues")
+
 require("plugins.mini.starter")
