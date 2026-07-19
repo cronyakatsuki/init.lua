@@ -25,6 +25,8 @@ vim.pack.add({
 
 local ORG_DIR = "~/org"
 
+-- Defer orgmode setup to after startup (~23ms saved)
+vim.schedule(function()
 require("orgmode").setup({
   -- ─── Agenda Files ───────────────────────────────────────────────
   org_agenda_files = {
@@ -200,10 +202,10 @@ require("orgmode").setup({
   },
 })
 
--- Experimental LSP support (optional — provides completion, etc.)
-vim.lsp.enable("org")
+  -- Experimental LSP support
+  vim.lsp.enable("org")
 
--- 4. Configure org-roam.nvim
+  -- Configure org-roam.nvim
 require("org-roam").setup({
   -- Your roam node files live in notes/
   directory = ORG_DIR .. "/notes",
@@ -253,3 +255,4 @@ require("org-roam").setup({
     },
   },
 })
+end)
