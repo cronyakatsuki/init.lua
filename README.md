@@ -1,106 +1,269 @@
-# Simple neovim config, with only a small amount of plugins
+# Neovim Config
 
-<!--toc:start-->
-- [Simple neovim config, with only a small amount of plugins](#simple-neovim-config-with-only-a-small-amount-of-plugins)
-  - [Package manager/Lazy loading/Lua compilation for faster startup time](#package-managerlazy-loadinglua-compilation-for-faster-startup-time)
-    - [Package manager](#package-manager)
-    - [Lazy loading](#lazy-loading)
-    - [Lua config compilation for faster startup](#lua-config-compilation-for-faster-startup)
-  - [Colorscheme](#colorscheme)
-  - [Treesitter](#treesitter)
-  - [Lsp](#lsp)
-  - [Code completion/autocompletion and snippets](#code-completionautocompletion-and-snippets)
-  - [Fuzzy finder/searcher](#fuzzy-findersearcher)
-  - [statusline](#statusline)
-  - [File manager](#file-manager)
-  - [Keybindings cheatsheet](#keybindings-cheatsheet)
-  - [Auto pair](#auto-pair)
-  - [Miscelenaous plugins](#miscelenaous-plugins)
-<!--toc:end-->
+A from-scratch Neovim configuration focused on **functionality, performance, and simplicity**.
 
-Very simple neovim config with just stuff I need to do my work/act like I'm a worker.
+## Philosophy & Key Decisions
 
-Trying to use as many built in stuff as possible ( That's the main reason I'm rocking the nighly version of neovim ).
+### Plugin Manager: `vim.pack` (built-in) over `lazy.nvim`
 
-I have all my configurations in a `lua/config` directory with a pack.lua file for some plugins that don't need any configurations.
+**Why:** After migrating to lazy.nvim and comparing startup times, the complexity of a separate plugin manager wasn't worth the ~74ms saved by deferred loading. With `vim.schedule()` for the single heaviest plugin (orgmode), startup is ~82ms — well below human perception. lazyloading .
 
-Now I will try and go over a couple type of plugins that I'm using or that I'm not using because it's now built in or just annoying and I don't understand why people use them.
+### Package Management: Nix shells over `mason.nvim`
 
-## Package manager/Lazy loading/Lua compilation for faster startup time
+Language servers, formatters, and linters are provided by Nix shells per project (or global system install). `nvim-lspconfig` auto-detects anything on `$PATH`. No mason.
 
-This is a pretty broad category because the most popular package manager lazy actually does all of this that's why I have it all mentioned here.
+### `mini.nvim` preference
 
-### Package manager
+Wherever mini.nvim provides a feature (cursorword, hipatterns, surround, etc.), it's used over standalone alternatives. Consistent API, single maintainer, lightweight.
 
-I'm using the new built in neovim package manager **pack** that's currently only available in the neovim nighly v0.12
+### No UI/Looks plugins
 
-### Lazy loading
+Explicitly avoided noice.nvim, lualine.nvim, bufferline.nvim, and similar cosmetic plugins. The focus is on editing efficiency, not eye candy.
 
-I don't do any lazy loading, I only use ( Looks at notes ) 6 packages only, and they all are either just a colorscheme or have amazing built in lazyloading.
+---
 
-### Lua config compilation for faster startup
+## Plugin Stack
 
-This is a feature that lazy.nvim does, and another plugin called impatient.nvim ( I believe that's the name ), but neovim has a built in feature for that since couple version ago ( It's still "experimenta" ) that works as well as the options named before.
+### Core & Colorscheme
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [nordic.nvim](https://github.com/AlexvZyl/nordic.nvim) | Colorscheme | Startup |
 
-## Colorscheme
+### Treesitter & Syntax
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax parsing, highlighting | Startup |
+| [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) | Syntax-aware text objects (`vif`, `vaf`, `]m`, `[[`, etc.) | Startup |
+| [nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context) | Sticky function/class header while scrolling | Startup |
+| [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) | Auto-close/rename HTML/JSX tags | Startup |
+| [rainbow-delimiters.nvim](https://github.com/HiPhish/rainbow-delimiters.nvim) | Rainbow-coloured bracket pairs | Startup |
+| [nvim-ts-context-commentstring](https://github.com/JoosepAlviste/nvim-ts-context-commentstring) | Correct commentstring in mixed files | Startup |
 
-Using gruvbox colorscheme, fight me or join me I don't care.
+**Parsers installed:** go, nix, lua, json, html, markdown_inline, python, bash, zsh, just, yaml, javascript, typescript, tsx, css, svelte, vue, c, cpp, rust, java, kotlin
 
-## Treesitter
+### LSP
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP client configuration | Startup |
+| [lazydev.nvim](https://github.com/folke/lazydev.nvim) | Lua LSP enhancements | `FileType lua` only |
 
-I enjoy using treesitter for syntax highlight.
+**Enabled servers:** nixd, lua_ls, jsonls, html, marksman, gopls, ruff, basedpyright, yamlls, bashls, just, qmlls, org
 
-## Lsp
+### Completion
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [blink.cmp](https://github.com/Saghen/blink.cmp) | Completion engine (v2, Rust-backed fuzzy matcher) | Startup |
+| [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | Snippet engine | Startup |
+| [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) | Snippet collection | Startup |
+| [copilot.lua](https://github.com/zbirenbaum/copilot.lua) | Copilot LSP backend | Startup (disabled, toggled on demand) |
+| [blink-copilot](https://github.com/fang2hou/blink-copilot) | blink.cmp Copilot source | Startup (disabled, toggled on demand) |
 
-I use the regular lsp with nvim-lspconfig just for the configurations so I don't have to set configuration for every lsp myself or update them if something changes in how an lsp work's.
+**Copilot** is disabled on startup to avoid the keepassxc password prompt. Toggle with `<leader>cc` or `:CopilotToggle`.
 
-I'm still able to change lsp settings using `lsp/name_of_lsp.lua` and changing specific settings I need.
+### Fuzzy Finding
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) | Fuzzy finder (replaces mini.pick) | Startup |
+| [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim) | Native fzf sorting (out-of-order matching) | Startup |
+| [plenary.nvim](https://github.com/nvim-lua/plenary.nvim) | Lua utilities (telescope dependency) | Startup |
+| [telescope-orgmode.nvim](https://github.com/nvim-orgmode/telescope-orgmode.nvim) | Orgmode headline/tag/refile/link pickers | Startup |
+| [telescope-undo.nvim](https://github.com/debugloop/telescope-undo.nvim) | Visual undo tree browser | Startup |
+| [telescope-zoxide](https://github.com/jvgrootveld/telescope-zoxide) | Zoxide directory picker | Startup |
 
-## Code completion/autocompletion and snippets
+**Why replace mini.pick?** mini.pick lacks out-of-order fuzzy matching (e.g. `src/lua` won't match `lua/src`). telescope-fzf-native provides proper fzf-style matching.
 
-I'm using the built in code completion and use mini.autocomplete to have autocompletion and definitions automatically show when typing but much less anoying than most other's autocompletion plugins.
+### Editing
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [mini.nvim](https://github.com/nvim-mini/mini.nvim) | Swiss-army knife (all modules below) | Startup |
 
-I don't use any plugin for stuff like path completion because neovim already has it built in, just type <C-x><C-f> and there are other type's of completion that already exist in neovim.
+**mini.nvim modules used:**
+- `mini.git` / `mini.diff` — Git gutter signs
+- `mini.statusline` — Status line
+- `mini.move` — Line/selection moving
+- `mini.splitjoin` — Toggle single/multi-line arguments
+- `mini.surround` — Surround text objects
+- `mini.indentscope` — Indent scope highlighting
+- `mini.notify` — In-editor notifications
+- `mini.comment` — Comment/uncomment (`gc`, `gcc`)
+- `mini.files` — File explorer
+- `mini.sessions` — Session management
+- `mini.visits` — Visit/file tracking
+- `mini.starter` — Startup screen
+- `mini.icons` — Icon provider for blink.cmp and telescope
+- `mini.hipatterns` — Highlight TODO/FIXME/HACK/NOTE + hex colors
+- `mini.cursorword` — Auto-highlight word under cursor
 
-For snippets I'm also making use of neovim's built in snippet engine with mini.snippets to add some more simple functionality.
+### Formatting & Linting
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [conform.nvim](https://github.com/stevearc/conform.nvim) | Formatter (alejandra for nix, gofumpt+goimports for go) | Startup |
+| [nvim-lint](https://github.com/mfussenegger/nvim-lint) | Linter (golangci-lint for go) | Startup |
 
-## Fuzzy finder/searcher
+### Debugging
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [nvim-dap](https://github.com/mfussenegger/nvim-dap) | Debug Adapter Protocol client | Startup |
+| [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) | DAP UI (scopes, breakpoints, stacks, watches, REPL) | Startup |
+| [nvim-dap-go](https://github.com/leoluz/nvim-dap-go) | Go DAP configuration (delve) | Startup |
+| [nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text) | Inline evaluated expression display | Startup |
+| [nvim-nio](https://github.com/nvim-neotest/nvim-nio) | Async library (dap-ui + neotest dependency) | Startup |
 
-I'm using mini.pick with multiple other mini extensions to add in more features some of them being:
+**Note:** No Python DAP adapter configured — gap if debugging Python.
 
-- git related searches
-- pattern searching like FIXME/HACK/TODO/NOTE
-- diagnostics
-- most visited paths
-- path's set with specific tag
+### Testing
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [neotest](https://github.com/nvim-neotest/neotest) | Test runner framework | Startup |
+| [neotest-golang](https://github.com/fredrikaverpil/neotest-golang) | Go test adapter (`go test`) | Startup |
+| [neotest-python](https://github.com/nvim-neotest/neotest-python) | Python test adapter (pytest) | Startup |
+| [neotest-plenary](https://github.com/nvim-neotest/neotest-plenary) | Lua/Neovim plugin test adapter (busted) | Startup |
 
-## statusline
+### Git
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [diffview.nvim](https://github.com/sindrets/diffview.nvim) | Git diff/merge viewer | Startup |
 
-I'm using the mini.statusline that's very simpe and only has the kind of info I need and nothing else.
+### Git + mini.git/mini.diff provide gutter signs. diffview adds rich diff browsing.
 
-## File manager
+### Markdown
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | In-buffer markdown rendering | `FileType markdown` only |
+| [markdown.nvim](https://github.com/tadmccorkle/markdown.nvim) | Markdown utilities | `FileType markdown` only |
+| [markdown-table-mode.nvim](https://github.com/Kicamon/markdown-table-mode.nvim) | Table editing | `FileType markdown` only |
 
-Mini.move, simple and easilly extendable.
+### Orgmode
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [nvim-orgmode](https://github.com/nvim-orgmode/orgmode) | Org-mode (agenda, capture, TODOs, notifications) | Startup, setup deferred via `vim.schedule` |
+| [org-roam.nvim](https://github.com/chipsenkbeil/org-roam.nvim) | Roam-style notes (dailies, backlinks) | Startup, setup deferred via `vim.schedule` |
 
-## Keybindings cheatsheet
+**Why deferred?** orgmode's 180-line setup with capture templates, agenda views, and custom commands costs ~23ms at startup. Since you won't enter orgmode in the first second, setup is scheduled to run 200ms after startup, saving that time.
 
-mini.clue, simple and looks like helix and is less in the way than whichkey and other similar plugins.
+### Keybinding Help
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [which-key.nvim](https://github.com/folke/which-key.nvim) | Keybinding popup help | Startup |
 
-Easy to also add custom completions for easier time.
+**Why replace mini.clues?** which-key provides a popup window (vs inline hints), auto-discovers keymaps from `desc` attributes, and requires less manual configuration.
 
-## Auto pair
+### Diagnostics
+| Plugin | Purpose | Load |
+|--------|---------|------|
+| [trouble.nvim](https://github.com/folke/trouble.nvim) | Live diagnostics/quickfix panel | Startup |
 
-I don't use any autopair plugins, they are annoying and almost never pair when I need them to and only pair when I don't need them to.
+---
 
-## Miscelenaous plugins
+## Keybindings Reference
 
-This are all mostly for some nihe stuff and don't have a specific category
+### Leader: `<Space>`
 
-- mini.notify : Simple notification
-- mini.visits : track visited files and file tagging
-- mini.indentscope : highlight current indent scope
-- mini.starter : simple dashboard
-- mini.sessions : simple session creator
-- mini.splitjoin : for easy spliting arguments
-- mini.move : add keybindings for moving lines
-- mini.icons : add icons support for everything I just named
+| Group | Prefix | Description |
+|-------|--------|-------------|
+| **Find** | `<leader>f` | Telescope pickers, file/search/git/visits |
+| **Debug** | `<leader>d` | DAP breakpoint, continue, step, REPL, UI |
+| **Test** | `<leader>t` | Neotest run, file, last, stop, output, summary |
+| **Session** | `<leader>s` | MiniSessions create/select |
+| **Visits** | `<leader>v` | MiniVisits add/remove labels |
+| **LSP** | `<leader>l` | Format buffer |
+| **Copilot** | `<leader>c` | Toggle Copilot |
+| **Explorer** | `<leader>e` | Toggle mini.files |
+| **Orgmode** | `<leader>o` | Agenda, capture, telescope headings/tags/refile/link |
+| **Roam** | `<leader>nd` | Org-roam dailies |
+| **Git** | `<leader>g` | Diffview open/close/history |
+| **Trouble** | `<leader>x` | Diagnostics, quickfix, references, symbols |
+| **Undo** | `<leader>u` | Telescope undo tree |
+| **Zoxide** | `<leader>z` | Telescope zoxide |
+
+### Text Objects (treesitter)
+
+| Key | Selects |
+|-----|---------|
+| `vif` / `vaf` | Inner / around function |
+| `vic` / `vac` | Inner / around class |
+| `vil` / `val` | Inner / around loop |
+| `vii` / `vai` | Inner / around conditional |
+| `vip` / `vap` | Inner / around parameter |
+| `vib` / `vab` | Inner / around block |
+| `vir` / `var` | Inner / around return |
+
+### Motion (treesitter)
+
+| Key | Action |
+|-----|--------|
+| `]m` / `[m` | Next/previous method |
+| `[M` / `]M` | End of next/previous method |
+| `]]` / `[[]` | Next/previous class |
+| `][` / `[]` | End of next/previous class |
+| `<leader>sn` / `<leader>sp` | Swap parameter next/previous |
+
+---
+
+## Performance
+
+| Metric | Value |
+|--------|-------|
+| Startup time | ~82ms |
+| Plugins total | 35 |
+| Loaded at startup | 33 |
+| Deferred (load on demand) | render-markdown, markdown.nvim, markdown-table-mode, lazydev.nvim |
+| Deferred setup (via `vim.schedule`) | orgmode, org-roam |
+
+---
+
+## Language Support
+
+| Language | LSP | Formatter | Linter | Test adapter |
+|----------|-----|-----------|--------|-------------|
+| Go | gopls | gofumpt + goimports | golangci-lint | neotest-golang |
+| Python | basedpyright + ruff | ruff | ruff | neotest-python |
+| Lua | lua_ls + lazydev.nvim | — | — | neotest-plenary |
+| Nix | nixd | alejandra | — | — |
+| Bash | bash-language-server | — | — | — |
+| Org | org (built-in) | — | — | — |
+
+---
+
+## File Structure
+
+```
+~/.config/nvim/
+├── init.lua                        # Entry point
+├── lazy-lock.json                  # (not used — using vim.pack)
+├── nvim-pack-lock.json             # Plugin lockfile
+├── README.md
+├── lua/
+│   ├── config/
+│   │   ├── init.lua                # Requires settings, keybindings, autocommands
+│   │   ├── settings.lua            # vim.opt options
+│   │   ├── keybindings.lua         # Global keymaps
+│   │   ├── autocommands.lua        # Autocommands
+│   │   └── copilot.lua             # Copilot toggle manager
+│   ├── lsp/
+│   │   ├── go.lua                  # gopls settings
+│   │   └── nixd.lua                # nixd settings
+│   └── plugins/
+│       ├── init.lua                # Plugin load order
+│       ├── colorscheme.lua
+│       ├── treesitter.lua          # treesitter + textobjects + context + autotag + rainbow + commentstring
+│       ├── lsp.lua                 # lspconfig + lazydev
+│       ├── blink.lua               # blink.cmp + LuaSnip + copilot
+│       ├── telescope.lua           # telescope + fzf-native + extensions
+│       ├── which-key.lua
+│       ├── conform.lua
+│       ├── lint.lua
+│       ├── dap.lua                 # nvim-dap + dap-ui + dap-go + dap-virtual-text
+│       ├── neotest.lua             # neotest + adapters
+│       ├── trouble.lua             # trouble diagnostics panel
+│       ├── diffview.lua            # git diff viewer
+│       ├── markdown.lua            # render-markdown + markdown.nvim + table-mode
+│       ├── org.lua                 # nvim-orgmode + org-roam
+│       └── mini/
+│           ├── init.lua            # All mini.nvim modules
+│           ├── _files.lua          # mini.files config
+│           ├── _highlight.lua      # mini.hipatterns config
+│           ├── _pick.lua           # mini.icons only (picker replaced by telescope)
+│           ├── _starter.lua        # mini.sessions + mini.visits + mini.starter
+│           └── _clues.lua          # Disabled (replaced by which-key)
+```
