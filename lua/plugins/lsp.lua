@@ -1,6 +1,12 @@
 vim.pack.add({
   { src = "https://github.com/neovim/nvim-lspconfig" },
+})
+
+-- lazydev.nvim — deferred until a Lua file is opened
+vim.pack.add({
   { src = "https://github.com/folke/lazydev.nvim" },
+}, {
+  load = function() end,
 })
 
 -- Enable some settings globally
@@ -16,9 +22,6 @@ vim.lsp.config("*", {
   -- make .git always be a root marker
   root_markers = { '.git' },
 })
-
--- fix annoying lua lsp errors
-require("lazydev").setup()
 
 -- Load per-server settings from lsp/*.lua
 -- Maps: module name (filename) -> LSP server name
@@ -49,3 +52,11 @@ vim.lsp.enable({
   "qmlls",
 })
 
+-- Only activate lazydev.nvim when editing Lua files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "lua",
+  callback = function()
+    vim.cmd.packadd("lazydev.nvim")
+    require("lazydev").setup()
+  end,
+})
