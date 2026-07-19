@@ -58,4 +58,5 @@ wk.add({
   { "<leader>z",  group = "Zoxide" },
   { "<leader>t",  group = "Test" },
   { "<leader>g",  group = "Git" },
+  { "<leader>x",  group = "Trouble" },
 })
