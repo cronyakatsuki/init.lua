@@ -8,7 +8,7 @@ vim.pack.add({
 local lint = require("lint")
 
 lint.linters_by_ft = {
-  go = { "golangci_lint" },
+  go = { "golangcilint" },
 }
 
 -- Auto-lint on save
