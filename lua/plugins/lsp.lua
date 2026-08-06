@@ -50,6 +50,7 @@ vim.lsp.enable({
   "bashls",
   "just",
   "qmlls",
+  "taplo",
 })
 
 -- Only activate lazydev.nvim when editing Lua files

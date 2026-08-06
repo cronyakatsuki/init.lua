@@ -23,7 +23,7 @@ require("nvim-treesitter").setup({})
 require("nvim-treesitter").install({
   -- Core languages
   "go", "nix", "lua", "json", "html", "markdown_inline", "python",
-  "bash", "zsh", "just", "yaml",
+  "bash", "zsh", "just", "yaml", "toml",
   -- Extra languages for textobjects / context / autotag
   "javascript", "typescript", "tsx", "css", "svelte", "vue",
   "c", "cpp", "rust", "java", "kotlin",

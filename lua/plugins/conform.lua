@@ -4,8 +4,9 @@ vim.pack.add({
 
 require("conform").setup({
   formatters_by_ft = {
-    nix = { "alejandra" },
-    go  = { "gofumpt", "goimports" },
+    nix  = { "alejandra" },
+    go   = { "gofumpt", "goimports" },
+    toml = { "taplo" },
   },
 })
 
