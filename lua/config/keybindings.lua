@@ -27,3 +27,6 @@ vim.keymap.set("n", "<leader>yp", function()
   vim.fn.setreg("+", path)
   print("file:", path)
 end, { desc = "Copy full file path" })
+
+-- Validate niri config.kdl
+vim.keymap.set("n", "<leader>vn", ":NiriValidate<CR>", { desc = "Validate niri config (KDL)" })
