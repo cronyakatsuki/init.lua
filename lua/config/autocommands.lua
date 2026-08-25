@@ -40,6 +40,15 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Enable tree-sitter highlighting for niri (KDL) and Quickshell (QML) configs
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup,
+  pattern = { "kdl", "qml", "qmldir" },
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
+
 -- Validate the current niri config.kdl (and its includes) with the niri binary
 vim.api.nvim_create_user_command("NiriValidate", function()
   local path = vim.fn.expand("%:p")
