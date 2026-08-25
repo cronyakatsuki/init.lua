@@ -27,6 +27,10 @@ require("nvim-treesitter").install({
   -- Extra languages for textobjects / context / autotag
   "javascript", "typescript", "tsx", "css", "svelte", "vue",
   "c", "cpp", "rust", "java", "kotlin",
+  -- Window manager / shell config languages
+  "kdl",      -- niri config.kdl
+  "qmljs",    -- QML (Quickshell)
+  "qmldir",   -- QML module files
 })
 
 -- ── Textobjects: select, move ────────────────────────────────────
