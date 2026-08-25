@@ -41,20 +41,12 @@ cmp.setup({
   -- Completion sources
   sources = {
     default = { "lsp", "path", "snippets", "buffer" },
-    per_filetype = {
-      qml = { "quickshell", "lsp", "path", "snippets", "buffer" },
-    },
     providers = {
       copilot = {
         name = "copilot",
         module = "blink-copilot",
         score_offset = 100,
         async = true,
-      },
-      quickshell = {
-        name = "Quickshell",
-        module = "quickshell-completions.blink",
-        score_offset = 90,
       },
     },
   },
