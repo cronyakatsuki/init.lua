@@ -40,6 +40,27 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Validate the current niri config.kdl (and its includes) with the niri binary
+vim.api.nvim_create_user_command("NiriValidate", function()
+  local path = vim.fn.expand("%:p")
+  if path == "" or vim.bo.filetype ~= "kdl" then
+    vim.notify("NiriValidate needs a .kdl file open", vim.log.levels.WARN)
+    return
+  end
+  if vim.bo.modified then
+    vim.cmd("silent write")
+  end
+  local res = vim.system({ "niri", "validate", "-c", path }, { text = true }):wait()
+  if res.code == 0 then
+    vim.notify("niri: config valid", vim.log.levels.INFO)
+  else
+    vim.notify(
+      "niri: config INVALID:\n" .. (res.stderr or res.stdout or ""),
+      vim.log.levels.ERROR
+    )
+  end
+end, { desc = "Run niri validate on the current KDL file" })
+
 -- disable autocommenting lines
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
