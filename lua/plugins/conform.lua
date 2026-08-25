@@ -7,7 +7,6 @@ require("conform").setup({
     nix  = { "alejandra" },
     go   = { "gofumpt", "goimports" },
     toml = { "taplo" },
-    kdl  = { "kdlfmt" },
   },
 })
 
