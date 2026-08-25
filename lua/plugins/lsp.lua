@@ -36,6 +36,15 @@ for mod, server in pairs(server_configs) do
   end
 end
 
+-- qmlls (QML / Quickshell)
+-- Binary lives outside PATH on Arch (/usr/lib/qt6/bin); -E makes it honor
+-- QML_IMPORT_PATH (required for Qt >= 6.8.2 per Quickshell docs).
+vim.lsp.config("qmlls", {
+  cmd = { "/usr/lib/qt6/bin/qmlls", "-E" },
+  filetypes = { "qml", "qmljs" },
+  root_markers = { "shell.qml", ".qmlls.ini", ".git" },
+})
+
 -- enable specific language servers
 vim.lsp.enable({
   "nixd",
@@ -49,6 +58,7 @@ vim.lsp.enable({
   "yamlls",
   "bashls",
   "just",
+  "kdl_lsp",
   "qmlls",
   "taplo",
 })
