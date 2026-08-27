@@ -135,11 +135,12 @@ require("orgmode").setup({
       },
     },
 
-    -- ── l: Session entry → append to the playthrough file you're in ──
-    -- Run from INSIDE the playthrough file; %F expands to its full path.
+    -- ── l: Session entry → append to a playthrough (auto-targeted) ──
+    -- Targets the playthrough file you're in, else the last one picked via
+    -- <leader>op, else prompts for a file. See lua/playthrough.lua.
     l = {
-      description = "Log session entry (inside playthrough file)",
-      target = "%F",
+      description = "Log session entry (playthrough)",
+      target = "%(return require('playthrough').capture_target())",
       template = {
         "*** %<%Y-%m-%d %H:%M>",
         "    %?",
