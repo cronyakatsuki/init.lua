@@ -119,9 +119,9 @@ require("orgmode").setup({
     -- Game title is prompted twice (filename + headline), then platform.
     p = {
       description = "Playthrough (new game file)",
-      target = ORG_DIR .. "/playthroughs/%^{Game title}.org",
+      target = ORG_DIR .. "/playthroughs/%^{Game title|Untitled}.org",
       template = {
-        "* %^{Game title}",
+        "* %^{Game title|Untitled}",
         "  :PROPERTIES:",
         "  :CREATED: %U",
         "  :PLATFORM: %^{Platform|PC|Legion Go|Retroid Pocket|Switch|PS5}",
