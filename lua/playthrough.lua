@@ -27,6 +27,11 @@ M.current_file = function()
   return nil
 end
 
+-- separable prompt (stub in tests/headless)
+M._prompt = function(prompt)
+  return vim.fn.input(prompt)
+end
+
 -- Resolve the capture target for the 'l' template:
 --   1. the playthrough file you're currently editing
 --   2. the last playthrough picked via <leader>op
@@ -40,7 +45,7 @@ M.capture_target = function()
   if M.last and vim.fn.filereadable(M.last) == 1 then
     return M.last
   end
-  local name = vim.fn.input("Playthrough file? ")
+  local name = M._prompt("Playthrough file? ")
   if name == nil or #name == 0 then
     name = "Untitled"
   end
