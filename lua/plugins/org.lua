@@ -37,6 +37,7 @@ require("orgmode").setup({
     ORG_DIR .. "/notes/**/*.org",
     ORG_DIR .. "/journal/**/*.org",
     ORG_DIR .. "/projects/**/*.org",
+    ORG_DIR .. "/playthroughs/**/*.org",
   },
 
   -- Default file for refile and quick capture (your inbox)
@@ -112,6 +113,39 @@ require("orgmode").setup({
       description = "Someday/Maybe",
       template = "* SOMEDAY %?\n  :PROPERTIES:\n  :CREATED: %U\n  :END:",
       target = ORG_DIR .. "/someday.org",
+    },
+
+    -- ── p: New playthrough → creates a per-game file in playthroughs/ ──
+    -- Game title is prompted twice (filename + headline), then platform.
+    p = {
+      description = "Playthrough (new game file)",
+      target = ORG_DIR .. "/playthroughs/%^{Game title}.org",
+      template = {
+        "* %^{Game title}",
+        "  :PROPERTIES:",
+        "  :CREATED: %U",
+        "  :PLATFORM: %^{Platform|PC|Legion Go|Retroid Pocket|Switch|PS5}",
+        "  :STATUS: active",
+        "  :END:",
+        "",
+        "** Where I left off",
+        "%?",
+        "",
+        "** Session log",
+      },
+    },
+
+    -- ── l: Session entry → append to the playthrough file you're in ──
+    -- Run from INSIDE the playthrough file; %F expands to its full path.
+    l = {
+      description = "Log session entry (inside playthrough file)",
+      target = "%F",
+      template = {
+        "*** %<%Y-%m-%d %H:%M>",
+        "    %?",
+        "",
+      },
+      headline = "Session log",
     },
   },
 
