@@ -71,7 +71,6 @@ M.list = function(opts)
         end
         local path = entry.path or entry.value
         if path then
-          vim.fn.fnamemodify(path, ":p") -- ensure absolute-ish
           path = vim.fn.fnamemodify(path, ":p")
           M.last = path
         end
