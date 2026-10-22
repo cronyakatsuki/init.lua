@@ -2,16 +2,9 @@
 -- https://github.com/nvim-telescope/telescope.nvim
 -- Uses telescope-fzf-native for fast out-of-order fuzzy matching.
 
-vim.pack.add({
-  { src = "https://github.com/nvim-lua/plenary.nvim" },
-  { src = "https://github.com/nvim-telescope/telescope.nvim" },
-  { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim" },
-  { src = "https://github.com/nvim-orgmode/telescope-orgmode.nvim" },
-  { src = "https://github.com/debugloop/telescope-undo.nvim" },
-  { src = "https://github.com/jvgrootveld/telescope-zoxide" },
-})
-
 -- Build the fzf-native C extension after install/update
+-- NOTE: must be registered BEFORE vim.pack.add() so that "install" events
+-- fired during add() (including lockfile installs) are caught.
 vim.api.nvim_create_autocmd("PackChanged", {
   group = vim.api.nvim_create_augroup("telescope-fzf-build", { clear = true }),
   callback = function(ev)
@@ -20,6 +13,15 @@ vim.api.nvim_create_autocmd("PackChanged", {
       vim.system({ "make" }, { cwd = ev.data.path })
     end
   end,
+})
+
+vim.pack.add({
+  { src = "https://github.com/nvim-lua/plenary.nvim" },
+  { src = "https://github.com/nvim-telescope/telescope.nvim" },
+  { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim" },
+  { src = "https://github.com/nvim-orgmode/telescope-orgmode.nvim" },
+  { src = "https://github.com/debugloop/telescope-undo.nvim" },
+  { src = "https://github.com/jvgrootveld/telescope-zoxide" },
 })
 
 local telescope = require("telescope")
