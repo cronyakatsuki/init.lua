@@ -10,7 +10,12 @@ vim.api.nvim_create_autocmd("PackChanged", {
   callback = function(ev)
     if ev.data.spec.name == "telescope-fzf-native.nvim"
       and (ev.data.kind == "install" or ev.data.kind == "update") then
-      vim.system({ "make" }, { cwd = ev.data.path })
+      -- Synchronous build: vim.system is async and races load_extension
+      -- during the same startup (and fails silently if make itself errors).
+      local out = vim.fn.system({ "make", "-C", ev.data.path })
+      if vim.v.shell_error ~= 0 then
+        vim.notify("telescope-fzf-native build failed:\n" .. out, vim.log.levels.ERROR)
+      end
     end
   end,
 })
@@ -87,6 +92,16 @@ telescope.setup({
 })
 
 -- Load telescope extensions
+-- Belt-and-braces: if the artifact is still missing (fresh checkout that
+-- slipped past the PackChanged build above), compile it now, synchronously,
+-- BEFORE the extension load. This is what makes first-launch self-healing.
+local fzf_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "site", "pack", "core", "opt", "telescope-fzf-native.nvim")
+if not vim.uv.fs_stat(vim.fs.joinpath(fzf_dir, "build", "libfzf.so")) then
+  local out = vim.fn.system({ "make", "-C", fzf_dir })
+  if vim.v.shell_error ~= 0 then
+    vim.notify("telescope-fzf-native build failed:\n" .. out, vim.log.levels.ERROR)
+  end
+end
 telescope.load_extension("fzf")
 telescope.load_extension("undo")
 telescope.load_extension("zoxide")
