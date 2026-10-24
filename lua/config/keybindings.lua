@@ -14,17 +14,9 @@ vim.keymap.set({ "n", "v", "x" }, "<Leader>p", '"+p', { desc = "Paste from syste
 vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
 
--- file exploring
-
--- Toggle Copilot on/off (avoids keepassxc prompt at startup)
-vim.keymap.set("n", "<leader>cc", function()
-  require("config.copilot").toggle()
-end, { desc = "Toggle Copilot" })
-
 -- Copy Full File-Path
 vim.keymap.set("n", "<leader>yp", function()
   local path = vim.fn.expand("%:p")
   vim.fn.setreg("+", path)
   print("file:", path)
 end, { desc = "Copy full file path" })
-

@@ -47,7 +47,6 @@ wk.add({
   { "<leader>s", group = "Session" },
   { "<leader>v", group = "Visits" },
   { "<leader>l", group = "LSP" },
-  { "<leader>c", group = "Copilot" },
   { "<leader>e", group = "Explorer" },
   { "<leader>o", group = "Orgmode" },
   { "<leader>oi", group = "Insert" },
