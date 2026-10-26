@@ -17,7 +17,7 @@ require("conform").setup({
       -- formatting options (QTBUG-119971, hardcodes 4 spaces), so route
       -- QML formatting here instead.
       command = "/usr/lib/qt6/bin/qmlformat",
-      args = { "-w", "2", "$FILENAME" }, -- 2-space indent; qmlformat can't read stdin, conform passes a temp file
+      args = { "-w", "2", "-i", "$FILENAME" }, -- 2-space indent; in-place: conform reads the result back from the temp file (qmlformat can't read stdin)
       stdin = false,
     },
   },
