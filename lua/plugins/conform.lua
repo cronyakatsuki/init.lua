@@ -7,6 +7,19 @@ require("conform").setup({
     nix  = { "alejandra" },
     go   = { "gofumpt", "goimports" },
     toml = { "taplo" },
+    qml  = { "qmlformat" },
+  },
+
+  formatters = {
+    qmlformat = {
+      -- Qt's standalone QML formatter (ships with qt6-declarative, not
+      -- symlinked into /usr/bin). qmlls's built-in formatter ignores all
+      -- formatting options (QTBUG-119971, hardcodes 4 spaces), so route
+      -- QML formatting here instead.
+      command = "/usr/lib/qt6/bin/qmlformat",
+      args = { "-w", "2", "$FILENAME" }, -- 2-space indent; qmlformat can't read stdin, conform passes a temp file
+      stdin = false,
+    },
   },
 })
 
