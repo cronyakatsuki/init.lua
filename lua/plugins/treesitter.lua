@@ -25,7 +25,7 @@ require("nvim-treesitter").install({
   "go", "nix", "lua", "json", "html", "markdown_inline", "python",
   "bash", "zsh", "just", "yaml", "toml",
   -- Extra languages for textobjects / context / autotag
-  "javascript", "typescript", "tsx", "css", "svelte", "vue",
+  "javascript", "typescript", "tsx", "css", "svelte", "vue", "qmljs",
   "c", "cpp", "rust", "java", "kotlin",
 })
 
