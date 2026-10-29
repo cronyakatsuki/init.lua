@@ -28,6 +28,7 @@ vim.lsp.config("*", {
 local server_configs = {
   go = "gopls",   -- lsp/go.lua  -> gopls settings
   nixd = "nixd",
+  qmlls = "qmlls",   -- lsp/qmlls.lua -> qmlls via qmlls6
 }
 for mod, server in pairs(server_configs) do
   local ok, settings = pcall(require, "lsp." .. mod)
@@ -50,6 +51,7 @@ vim.lsp.enable({
   "bashls",
   "just",
   "taplo",
+  "qmlls",
 })
 
 -- Only activate lazydev.nvim when editing Lua files
