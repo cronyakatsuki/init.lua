@@ -3,6 +3,7 @@ vim.o.background = "dark"
 
 require("catppuccin").setup({
   term_colors = true, -- sets terminal colors (e.g. `g:terminal_color_0`)
+  transparent_background = true,
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false
