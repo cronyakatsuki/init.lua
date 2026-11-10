@@ -16,6 +16,6 @@ require("diffview").setup({
 })
 
 -- Keybindings
-vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<CR>",      { desc = "Open diffview" })
-vim.keymap.set("n", "<leader>gD", "<cmd>DiffviewClose<CR>",     { desc = "Close diffview" })
+vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<CR>", { desc = "Open diffview" })
+vim.keymap.set("n", "<leader>gD", "<cmd>DiffviewClose<CR>", { desc = "Close diffview" })
 vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory<CR>", { desc = "File history" })
