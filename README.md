@@ -104,20 +104,10 @@ Explicitly avoided noice.nvim, lualine.nvim, bufferline.nvim, and similar cosmet
 | Plugin | Purpose | Load |
 |--------|---------|------|
 | [nvim-dap](https://github.com/mfussenegger/nvim-dap) | Debug Adapter Protocol client | Startup |
-| [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) | DAP UI (scopes, breakpoints, stacks, watches, REPL) | Startup |
 | [nvim-dap-go](https://github.com/leoluz/nvim-dap-go) | Go DAP configuration (delve) | Startup |
 | [nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text) | Inline evaluated expression display | Startup |
-| [nvim-nio](https://github.com/nvim-neotest/nvim-nio) | Async library (dap-ui + neotest dependency) | Startup |
 
-**Note:** No Python DAP adapter configured — gap if debugging Python.
-
-### Testing
-| Plugin | Purpose | Load |
-|--------|---------|------|
-| [neotest](https://github.com/nvim-neotest/neotest) | Test runner framework | Startup |
-| [neotest-golang](https://github.com/fredrikaverpil/neotest-golang) | Go test adapter (`go test`) | Startup |
-| [neotest-python](https://github.com/nvim-neotest/neotest-python) | Python test adapter (pytest) | Startup |
-| [neotest-plenary](https://github.com/nvim-neotest/neotest-plenary) | Lua/Neovim plugin test adapter (busted) | Startup |
+**Note:** No separate DAP UI — debugging runs with breakpoints + step keymaps, virtual text values, and the REPL. No Python DAP adapter configured — gap if debugging Python.
 
 ### Git
 | Plugin | Purpose | Load |
@@ -162,8 +152,7 @@ Explicitly avoided noice.nvim, lualine.nvim, bufferline.nvim, and similar cosmet
 | Group | Prefix | Description |
 |-------|--------|-------------|
 | **Find** | `<leader>f` | Telescope pickers, file/search/git/visits |
-| **Debug** | `<leader>d` | DAP breakpoint, continue, step, REPL, UI |
-| **Test** | `<leader>t` | Neotest run, file, last, stop, output, summary |
+| **Debug** | `<leader>d` | DAP breakpoint, continue, step, REPL |
 | **Session** | `<leader>s` | MiniSessions create/select |
 | **Visits** | `<leader>v` | MiniVisits add/remove labels |
 | **LSP** | `<leader>l` | Format buffer |
@@ -216,9 +205,9 @@ Explicitly avoided noice.nvim, lualine.nvim, bufferline.nvim, and similar cosmet
 
 | Language | LSP | Formatter | Linter | Test adapter |
 |----------|-----|-----------|--------|-------------|
-| Go | gopls | gofumpt + goimports | golangci-lint | neotest-golang |
-| Python | basedpyright + ruff | ruff | ruff | neotest-python |
-| Lua | lua_ls + lazydev.nvim | — | — | neotest-plenary |
+| Go | gopls | gofumpt + goimports | golangci-lint | — |
+| Python | basedpyright + ruff | ruff | ruff | — |
+| Lua | lua_ls + lazydev.nvim | — | — | — |
 | Nix | nixd | alejandra | — | — |
 | Bash | bash-language-server | — | — | — |
 | Org | org (built-in) | — | — | — |
@@ -253,8 +242,7 @@ Explicitly avoided noice.nvim, lualine.nvim, bufferline.nvim, and similar cosmet
 │       ├── which-key.lua
 │       ├── conform.lua
 │       ├── lint.lua
-│       ├── dap.lua                 # nvim-dap + dap-ui + dap-go + dap-virtual-text
-│       ├── neotest.lua             # neotest + adapters
+│       ├── dap.lua                 # nvim-dap + dap-go + dap-virtual-text
 │       ├── trouble.lua             # trouble diagnostics panel
 │       ├── diffview.lua            # git diff viewer
 │       ├── markdown.lua            # render-markdown + markdown.nvim + table-mode
